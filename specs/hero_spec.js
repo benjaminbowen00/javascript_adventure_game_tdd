@@ -94,8 +94,24 @@ describe("Hero test", function(){
     hero1.addTask(task1);
     hero1.addTask(task2);
     hero1.addTask(task3);
-    hero1.sortTasks("taskname");
+    hero1.sortTasks("Name");
     assert.deepEqual(hero1.tasks, [task3, task2, task1]);
+  })
+
+  it("can view tasks that are incomplete", function(){
+    hero1.addTask(task1);
+    hero1.addTask(task2);
+    hero1.addTask(task3);
+    hero1.setCompleted(task2);
+    assert.strictEqual(hero1.getIncompleteTasks(), "Tasks to complete: find sword and defeat dragon" );
+  })
+
+  it("can view tasks that are complete", function(){
+    hero1.addTask(task1);
+    hero1.addTask(task2);
+    hero1.addTask(task3);
+    hero1.setCompleted(task2);
+    assert.strictEqual(hero1.getCompletedTasks(), "Tasks completed: find shield" );
   })
 
 

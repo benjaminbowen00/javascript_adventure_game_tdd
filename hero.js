@@ -49,11 +49,18 @@ function compareReward(task1, task2) {
   else {return 0;}
 }
 
-
 Hero.prototype.sortTasks = function(attribute){
+  let substring = "name"
+  if(attribute.toLowerCase().indexOf(substring) != -1){
+    this.tasks.sort(compareTaskName);
+  }
+  else{
+    this.sortTasksSwitch(attribute);
+  }
+}
+
+Hero.prototype.sortTasksSwitch = function(attribute){
   switch(attribute.toLowerCase()){
-    case "taskname" : this.tasks.sort(compareTaskName);
-    break;
     case "difficulty" : this.tasks.sort(compareDifficulty);
     break;
     case "urgency" : this.tasks.sort(compareUrgency);
@@ -61,6 +68,24 @@ Hero.prototype.sortTasks = function(attribute){
     case "reward" : this.tasks.sort(compareReward);
     break;
   }
+}
+
+Hero.prototype.getIncompleteTasks = function(){
+  let array = this.tasks.filter(task => task.completed === false);
+  let string = "Tasks to complete:"
+  return formTaskStatement(array, string);
+}
+
+Hero.prototype.getCompletedTasks = function(){
+  array = this.tasks.filter(task => task.completed === true);
+  let string = "Tasks completed:"
+  return formTaskStatement(array, string);
+}
+
+function formTaskStatement(taskArray, startingString){
+  var reducer = function(accumulator, value){return accumulator +" "+ value.taskName.toLowerCase()+" and"}
+  var outputStatement = taskArray.reduce(reducer, startingString);
+  return outputStatement.slice(0, outputStatement.length -4);
 }
 
 
