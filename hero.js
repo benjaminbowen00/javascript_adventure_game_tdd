@@ -13,10 +13,29 @@ Hero.prototype.addTask = function(task){
   this.tasks.push(task);
 }
 
+function poisonedMultiplier(food){
+  return (food.poisoned) ? -1 : 1;
+}
+
+function favouriteFoodMultiplier(food){
+  return (this.isFoodFavourite(food)) ? 1.5 : 1;
+}
+
+Hero.prototype.favouriteFoodMultiplier = function(food){
+  return (this.isFoodFavourite(food)) ? 1.5 : 1;
+}
+
 Hero.prototype.eat = function(food){
-  var multiplier = 1;
-  if (this.isFoodFavourite(food)){multiplier = 1.5;}
-  this.health += multiplier * food.replenishmentValue;
+  var poisonedFactor = poisonedMultiplier(food);
+  var multiplier = this.favouriteFoodMultiplier(food);
+  //OR
+  // var multiplier = 1;
+  // if (this.isFoodFavourite(food)){multiplier = 1.5;}
+  this.health += multiplier * poisonedFactor * food.replenishmentValue;
+  healthNotAbove100();
+}
+
+function healthNotAbove100(){
   if(this.health > 100){ this.health = 100;}
 }
 
@@ -85,7 +104,11 @@ Hero.prototype.getCompletedTasks = function(){
 function formTaskStatement(taskArray, startingString){
   var reducer = function(accumulator, value){return accumulator +" "+ value.taskName.toLowerCase()+" and"}
   var outputStatement = taskArray.reduce(reducer, startingString);
-  return outputStatement.slice(0, outputStatement.length -4);
+  return removeLastFourCharacters(outputStatement);
+}
+
+function removeLastFourCharacters(array){
+  return array.slice(0, array.length - 4);
 }
 
 

@@ -2,6 +2,7 @@ const assert = require("assert");
 const Hero = require("../hero.js");
 const Task = require("../task.js");
 const Food = require("../food.js");
+const Rat = require("../rat.js");
 
 
 describe("Hero test", function(){
@@ -22,6 +23,7 @@ describe("Hero test", function(){
     food1 = new Food("Cheese sandwich", 10);
     food2 = new Food("ham sandwich", 10);
     food3 = new Food("Cheese sandwich", 8);
+    rat1 = new Rat("Ratty");
   })
 
   it("hero has name", function(){
@@ -114,6 +116,19 @@ describe("Hero test", function(){
     assert.strictEqual(hero1.getCompletedTasks(), "Tasks completed: find shield" );
   })
 
+  it("hero loses health if eats posioned food", function(){
+    hero1.health = 50;
+    rat1.touchFood(food1);
+    hero1.eat(food1);
+    assert.strictEqual(hero1.health, 35);
+  })
+
+  it("hero loses health if eats posioned food - not favourite", function(){
+    hero1.health = 50;
+    rat1.touchFood(food2);
+    hero1.eat(food2);
+    assert.strictEqual(hero1.health, 40);
+  })
 
 
 })
