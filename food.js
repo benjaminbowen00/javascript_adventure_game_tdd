@@ -13,7 +13,7 @@ const Food = function(foodName, replenishmentValue){
 // }
 
 Food.prototype.equals = function(food) {
-  return this.foodName === food.foodName;
+  return this.foodName.toLowerCase() === food.foodName.toLowerCase();
 }
 
 food1 = new Food("Cheese sandwich", 10);

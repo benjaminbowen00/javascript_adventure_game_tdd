@@ -13,19 +13,41 @@ Hero.prototype.addTask = function(task){
   this.tasks.push(task);
 }
 
-function poisonedMultiplier(food){
+Hero.prototype.isFoodFavourite = function(food){
+  return this.favouriteFood.equals(food);
+}
+
+// function isFoodFavourite(food){
+//   return this.favouriteFood.equals(food);
+// }
+// const isFoodFavourite = function(food){
+//   return this.favouriteFood.equals(food);
+// }
+
+// function poisonedMultiplier(food){
+//   // console.log("posioned multiplier context:", this);
+//   //context is global - when called from within the hero object
+//   //better to have this as a Hero prototype method?
+//   return (food.poisoned) ? -1 : 1;
+// }
+
+var poisonedMultiplier = function(food){
   return (food.poisoned) ? -1 : 1;
 }
 
 function favouriteFoodMultiplier(food){
+  console.log("Favourite food multiplier context:", this);
   return (this.isFoodFavourite(food)) ? 1.5 : 1;
 }
 
 Hero.prototype.favouriteFoodMultiplier = function(food){
+  console.log("Favourite food multiplier context:", this);
   return (this.isFoodFavourite(food)) ? 1.5 : 1;
 }
 
 Hero.prototype.eat = function(food){
+  // var favouriteFoodMultiplierBinded = favouriteFoodMultiplier.bind(this);
+
   var poisonedFactor = poisonedMultiplier(food);
   var multiplier = this.favouriteFoodMultiplier(food);
   //OR
@@ -37,10 +59,6 @@ Hero.prototype.eat = function(food){
 
 function healthNotAbove100(){
   if(this.health > 100){ this.health = 100;}
-}
-
-Hero.prototype.isFoodFavourite = function(food){
-  return this.favouriteFood.equals(food);
 }
 
 Hero.prototype.setCompleted = function(task){
