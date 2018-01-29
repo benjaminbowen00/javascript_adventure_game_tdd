@@ -13,13 +13,13 @@ Hero.prototype.addTask = function(task){
   this.tasks.push(task);
 }
 
-Hero.prototype.isFoodFavourite = function(food){
-  return this.favouriteFood.equals(food);
-}
-
-// function isFoodFavourite(food){
+// Hero.prototype.isFoodFavourite = function(food){
 //   return this.favouriteFood.equals(food);
 // }
+
+function isFoodFavourite(food){
+  return this.favouriteFood.equals(food);
+}
 // const isFoodFavourite = function(food){
 //   return this.favouriteFood.equals(food);
 // }
@@ -37,19 +37,21 @@ var poisonedMultiplier = function(food){
 
 function favouriteFoodMultiplier(food){
   console.log("Favourite food multiplier context:", this);
-  return (this.isFoodFavourite(food)) ? 1.5 : 1;
+  var isFoodFavouriteBound = isFoodFavourite.bind(this);
+  return (isFoodFavouriteBound(food)) ? 1.5 : 1;
 }
 
-Hero.prototype.favouriteFoodMultiplier = function(food){
-  console.log("Favourite food multiplier context:", this);
-  return (this.isFoodFavourite(food)) ? 1.5 : 1;
-}
+// Hero.prototype.favouriteFoodMultiplier = function(food){
+//   console.log("Favourite food multiplier context:", this);
+//   return (this.isFoodFavourite(food)) ? 1.5 : 1;
+// }
 
 Hero.prototype.eat = function(food){
   // var favouriteFoodMultiplierBinded = favouriteFoodMultiplier.bind(this);
 
+  var boundFavouriteFoodMultiplier = favouriteFoodMultiplier.bind(this);
   var poisonedFactor = poisonedMultiplier(food);
-  var multiplier = this.favouriteFoodMultiplier(food);
+  var multiplier = boundFavouriteFoodMultiplier(food);
   //OR
   // var multiplier = 1;
   // if (this.isFoodFavourite(food)){multiplier = 1.5;}
