@@ -132,4 +132,8 @@ function removeLastFourCharacters(array){
 }
 
 
-module.exports = Hero;
+module.exports = { heroConstructor: Hero,
+  // isFoodFavourite: isFoodFavourite(),
+  poisonedMultiplier: poisonedMultiplier
+//export function for fav food
+};

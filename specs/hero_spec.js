@@ -1,8 +1,10 @@
 const assert = require("assert");
-const Hero = require("../hero.js");
+const Hero = require("../hero.js").heroConstructor;
 const Task = require("../task.js");
 const Food = require("../food.js");
 const Rat = require("../rat.js");
+// const isFoodFavourite = require("../hero.js");
+const poisonedMultiplier = require("../hero.js").poisonedMultiplier;
 
 
 describe("Hero test", function(){
@@ -44,8 +46,9 @@ describe("Hero test", function(){
     assert.strictEqual(hero1.tasks.length, 2);
   })
 
-  xit("can detect favourite food", function(){
-    assert.strictEqual(hero1.isFoodFavourite(food3), true)
+  it("can detect favourite food", function(){
+    var outcome = poisonedMultiplier(food1);
+    assert.strictEqual(outcome, 1);
   })
 
   it("hero can eat fav food", function(){
